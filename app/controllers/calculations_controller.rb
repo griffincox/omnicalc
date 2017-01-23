@@ -11,19 +11,29 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @character_count_without_spaces = @text.delete(' ').length
 
-    @word_count = "Replace this string with your answer."
+    @word_count = @text.split(' ').length
 
-    @occurrences = "Replace this string with your answer."
+    @occurrences = occurences_fn(@text, @special_word)
 
     # ================================================================================
     # Your code goes above.
     # ================================================================================
 
     render("word_count.html.erb")
+  end
+
+  def occurences_fn(array, target_string)
+    num_occurences = 0;
+    array.split(' ').each do |object|
+      if object == target_string
+        num_occurences +=1;
+      end
+    end
+    return num_occurences
   end
 
   def loan_payment
