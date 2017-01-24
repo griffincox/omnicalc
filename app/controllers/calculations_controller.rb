@@ -13,7 +13,7 @@ class CalculationsController < ApplicationController
 
     @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = @text.delete(' ').length
+    @character_count_without_spaces = @text.delete(' ').delete("\n").length
 
     @word_count = @text.split(' ').length
 
@@ -28,8 +28,8 @@ class CalculationsController < ApplicationController
 
   def occurences_fn(array, target_string)
     num_occurences = 0;
-    array.split(' ').each do |object|
-      if object == target_string
+    array.downcase.split(' ').each do |object|
+      if object == target_string.downcase
         num_occurences +=1;
       end
     end
@@ -47,8 +47,10 @@ class CalculationsController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
-
-    @monthly_payment = "Replace this string with your answer."
+    @apr_percent = @apr/100
+    @rate_percent = @apr_percent/12
+    @months = @years * 12
+    @monthly_payment = @principal*@rate_percent/(1-1/(1+@rate_percent)**(@months))
 
     # ================================================================================
     # Your code goes above.
