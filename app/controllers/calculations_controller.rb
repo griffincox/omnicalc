@@ -13,7 +13,7 @@ class CalculationsController < ApplicationController
 
     @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = @text.delete(' ').delete("\n").length
+    @character_count_without_spaces = @text.delete(' ').delete("\r\n").length
 
     @word_count = @text.split(' ').length
 
@@ -138,10 +138,10 @@ class CalculationsController < ApplicationController
   end
 
   def variance_finder(array)
-  mean = array.inject(:+) / array.length.to_f
-  var_sum = array.map{|n| (n-mean)**2}.inject(:+).to_f
-  sample_variance = var_sum / (array.length)
-  return sample_variance
+    mean = array.inject(:+) / array.length.to_f
+    var_sum = array.map{|n| (n-mean)**2}.inject(:+).to_f
+    sample_variance = var_sum / (array.length)
+    return sample_variance
   end
 
   def mode_finder(array)
