@@ -113,10 +113,13 @@ class CalculationsController < ApplicationController
     @mean = @sum/@count
 
     @variance = variance_finder(@numbers)
+    # credit: http://stackoverflow.com/questions/7749568/how-can-i-do-standard-deviation-in-ruby
 
     @standard_deviation = Math.sqrt(@variance)
+    # credit: http://stackoverflow.com/questions/7749568/how-can-i-do-standard-deviation-in-ruby
 
-    @mode = "replace"
+    @mode = mode_finder(@numbers)[0]
+    # credit: http://stackoverflow.com/questions/25343374/finding-the-mode-of-a-ruby-array-simplified
 
     # ================================================================================
     # Your code goes above.
@@ -139,5 +142,9 @@ class CalculationsController < ApplicationController
   var_sum = array.map{|n| (n-mean)**2}.inject(:+).to_f
   sample_variance = var_sum / (array.length)
   return sample_variance
+  end
+
+  def mode_finder(array)
+    array.group_by{ |e| e }.group_by{ |k, v| v.size }.max.pop.map{ |e| e.shift }
   end
 end
