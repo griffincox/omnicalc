@@ -94,32 +94,50 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort()
 
-    @minimum = "Replace this string with your answer."
+    @count = @numbers.length
 
-    @maximum = "Replace this string with your answer."
+    @minimum = @sorted_numbers.first
 
-    @range = "Replace this string with your answer."
+    @maximum = @sorted_numbers.last
 
-    @median = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @sum = "Replace this string with your answer."
+    @median = median_finder(@numbers)
 
-    @mean = "Replace this string with your answer."
+    @sum = @numbers.sum
 
-    @variance = "Replace this string with your answer."
+    @mean = @sum/@count
 
-    @standard_deviation = "Replace this string with your answer."
+    @variance = variance_finder(@numbers)
 
-    @mode = "Replace this string with your answer."
+    @standard_deviation = Math.sqrt(@variance)
+
+    @mode = "replace"
 
     # ================================================================================
     # Your code goes above.
     # ================================================================================
 
     render("descriptive_statistics.html.erb")
+  end
+
+  def median_finder(array)
+    len = array.length
+    if len % 2 == 0
+      return ((array[len/2] + array[len/2+1])/2)
+    else
+      return array[len/2]
+    end
+  end
+
+  def variance_finder(array)
+  mean = array.inject(:+) / array.length.to_f
+  var_sum = array.map{|n| (n-mean)**2}.inject(:+).to_f
+  sample_variance = var_sum / (array.length)
+  return sample_variance
   end
 end
